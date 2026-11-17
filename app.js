@@ -41,8 +41,8 @@ async function sendMessage(message){
   $("#welcomeCard").hidden=true;addMessage("user",message+(files.length?`\n\nФайлы: ${files.map(f=>f.name).join(", ")}`:""));
   selectedFiles=[];renderAttached();
   const provider=$("#modelSelect").value;
-  const apiUrl=localStorage.getItem("aihub-api-url")||"";
-  if(provider!=="demo"&&apiUrl){
+  const apiUrl=localStorage.getItem("aihub-api-url")||location.origin;
+  if(provider!=="demo"){
     try{
       const res=await fetch(apiUrl.replace(/\/$/,"")+"/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({provider,message,files:files.map(f=>({name:f.name,type:f.type,size:f.size}))})});
       if(!res.ok)throw new Error(`HTTP ${res.status}`);
